@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class TreeClickHandler : MonoBehaviour
 {
-    public GameObject logPrefab; // Drag the log prefab onto this field in the Inspector.
-        [SerializeField] private float interactionDistance = 4f; // Integer variable that can be set in the Inspector.
-
+    public GameObject logPrefab;
+    [SerializeField] private float interactionDistance = 4f;
     private int clickCount = 0;
     private bool canReplace = false;
+    private int breakCount = 10;
 
-    private void OnMouseDown()
+    // Expose the AudioSource and AudioClip in the Unity Editor
+    [SerializeField] private AudioClip treeClickSound;
+ private void OnMouseDown()
     {
-        if (clickCount < 4)
+        if (clickCount < breakCount)
         {
             clickCount++;
+
+            if (treeClickSound != null)
+            {
+                // Play the sound directly from the object's AudioSource component
+                AudioSource audioSource = GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.clip = treeClickSound;
+                    audioSource.Play();
+                }
+            }
         }
-        else if (clickCount == 4 && Vector3.Distance(transform.position, FirstPersonController.instance.transform.position) <= interactionDistance)
+        else if (clickCount >= breakCount && Vector3.Distance(transform.position, FirstPersonController.instance.transform.position) <= interactionDistance)
         {
             ReplaceTreeWithLog();
         }
@@ -24,10 +37,18 @@ public class TreeClickHandler : MonoBehaviour
 
     private void ReplaceTreeWithLog()
     {
-        // Instantiate the log prefab at the same position and rotation as the tree.
-        Instantiate(logPrefab, transform.position, transform.rotation);
+        if (treeClickSound != null)
+        {
+            // Play the sound before replacing the tree
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.clip = treeClickSound;
+                audioSource.Play();
+            }
+        }
 
-        // Destroy the tree to remove it from the scene.
+        Instantiate(logPrefab, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
