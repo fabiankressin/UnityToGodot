@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakCount: 10
-  interactionDistance: 50
+  interactionDistance: 5
   interactionSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   canBePickedUp: 1
   dropItemsOnDestroy: 0

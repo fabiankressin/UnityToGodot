@@ -73,21 +73,32 @@ public class InteractableObject : MonoBehaviour
             PlayInteractionSound();
         }
 
-        GameObject spawnedObject = Instantiate(droppedPrefab, transform.position, transform.rotation);
-
-        if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
-        {
-            // Attach a Rigidbody if needed
-            spawnedObject.AddComponent<Rigidbody>();
-        }
 
         if (dropItemsOnDestroy)
         {
-            // Implement logic for dropping items (e.g., spawning rigidbodies)
-            // This can include spawning collectible items, updating UI, etc.
-            // Example: Instantiate(itemPrefab, spawnedObject.transform.position, Quaternion.identity);
-        }
+            // Generate a random number of objects between 5 and 12
+            int numberOfObjects = Random.Range(5, 13);
 
-        Destroy(gameObject);
+            for (int i = 0; i < numberOfObjects; i++)
+            {
+                // Calculate a random position within the bounds of the object's collider
+                Vector3 randomPosition = new Vector3(
+                    Random.Range(-0.5f, 0.5f),
+                    Random.Range(0f, 2.5f),
+                    Random.Range(-0.5f, 0.5f)
+                );
+
+                // Spawn the object at the calculated position
+                GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
+
+                if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
+                {
+                    // Attach a Rigidbody if needed
+                    spawnedObject.AddComponent<Rigidbody>();
+                }
+            }
+
+            Destroy(gameObject);
+        }
     }
 }
