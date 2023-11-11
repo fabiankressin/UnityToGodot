@@ -122,9 +122,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logPrefab: {fileID: 7601497132988793633, guid: aafee44536ff9cb44a8be4b4935cca13, type: 3}
+  canBePickedUp: 0
+  dropItemsOnDestroy: 1
+  inventoryIcon: {fileID: 0}
+  breakCount: 10
   interactionDistance: 4
-  treeClickSound: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
+  interactionSound: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
+  droppedPrefab: {fileID: 7601497132988793633, guid: aafee44536ff9cb44a8be4b4935cca13, type: 3}
+  useRigidbody: 0
 --- !u!82 &853202792767523968
 AudioSource:
   m_ObjectHideFlags: 0

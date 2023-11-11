@@ -776,8 +776,36 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 455816, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1920898634288865033}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 118898, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2691430464135771405}
   m_SourcePrefab: {fileID: 100100000, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+--- !u!1 &7601497132988793633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 118898, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+  m_PrefabInstance: {fileID: 7601497132988846931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2691430464135771405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7601497132988793633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 50
+  interactionSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  inventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 0}
+  useRigidbody: 0
 --- !u!4 &7601497132988999643 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455816, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
