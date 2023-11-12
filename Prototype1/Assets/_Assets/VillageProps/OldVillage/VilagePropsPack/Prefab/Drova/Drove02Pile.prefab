@@ -67,6 +67,7 @@ MonoBehaviour:
   inventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 0}
   useRigidbody: 0
+  displayName: Wood Pile
 --- !u!65 &2465920888109713535
 BoxCollider:
   m_ObjectHideFlags: 0

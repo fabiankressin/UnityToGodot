@@ -120,10 +120,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakCount: 10
-  interactionDistance: 10
+  interactionDistance: 7
   interactionSound: {fileID: 0}
   canBePickedUp: 0
   dropItemsOnDestroy: 1
   inventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 185840, guid: fe78b30f7a980d748a46c587a31099fc, type: 3}
   useRigidbody: 1
+  displayName: Rock

@@ -130,6 +130,7 @@ MonoBehaviour:
   inventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 8830229297879083243, guid: 20540db286ca29e49a31f0e63c4aec75, type: 3}
   useRigidbody: 0
+  displayName: Birch Tree
 --- !u!82 &4182271073180376288
 AudioSource:
   m_ObjectHideFlags: 0

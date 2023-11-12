@@ -5,16 +5,18 @@ public class InteractableObject : MonoBehaviour
 {
     private int clickCount = 0;
     [SerializeField] private int breakCount = 10;
-    [SerializeField] private float interactionDistance = 4f;
+    public float interactionDistance = 5f;
     [SerializeField] private AudioClip interactionSound;
-    [SerializeField] private bool canBePickedUp = false;
+    public bool canBePickedUp = false;
     [SerializeField] private bool dropItemsOnDestroy = true;
     [SerializeField] private GameObject inventoryIcon;
     [SerializeField] private GameObject droppedPrefab;
     [SerializeField] private bool useRigidbody = true;
+    public string displayName = "";
 
     private void OnMouseDown()
     {
+
         if (Vector3.Distance(transform.position, FirstPersonController.instance.transform.position) <= interactionDistance)
         {
             if (clickCount < breakCount)
@@ -76,29 +78,37 @@ public class InteractableObject : MonoBehaviour
 
         if (dropItemsOnDestroy)
         {
-            // Generate a random number of objects between 5 and 12
-            int numberOfObjects = Random.Range(5, 13);
-
-            for (int i = 0; i < numberOfObjects; i++)
+            if (useRigidbody)
             {
-                // Calculate a random position within the bounds of the object's collider
-                Vector3 randomPosition = new Vector3(
-                    Random.Range(-0.5f, 0.5f),
-                    Random.Range(0f, 2.5f),
-                    Random.Range(-0.5f, 0.5f)
-                );
+                // Generate a random number of objects between 5 and 12
+                int numberOfObjects = Random.Range(5, 13);
 
-                // Spawn the object at the calculated position
-                GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
-
-                if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
+                for (int i = 0; i < numberOfObjects; i++)
                 {
-                    // Attach a Rigidbody if needed
-                    spawnedObject.AddComponent<Rigidbody>();
+                    // Calculate a random position within the bounds of the object's collider
+                    Vector3 randomPosition = new Vector3(
+                        Random.Range(-0.5f, 0.5f),
+                        Random.Range(0f, 2.5f),
+                        Random.Range(-0.5f, 0.5f)
+                    );
+
+                    // Spawn the object at the calculated position
+                    GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
+
+                    if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
+                    {
+                        // Attach a Rigidbody if needed
+                        spawnedObject.AddComponent<Rigidbody>();
+                    }
                 }
             }
+            else
+            {
+                Instantiate(droppedPrefab, transform.position, transform.rotation);
+            }
 
-            Destroy(gameObject);
+
         }
+        Destroy(gameObject);
     }
 }

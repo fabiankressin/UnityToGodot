@@ -98,13 +98,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakCount: 10
-  interactionDistance: 50
+  interactionDistance: 3
   interactionSound: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   canBePickedUp: 1
   dropItemsOnDestroy: 0
   inventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 0}
   useRigidbody: 0
+  displayName: Mushroom
 --- !u!64 &6821618031301595219
 MeshCollider:
   m_ObjectHideFlags: 0
