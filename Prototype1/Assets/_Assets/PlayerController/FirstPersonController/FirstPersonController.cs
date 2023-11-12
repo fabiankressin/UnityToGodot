@@ -134,10 +134,12 @@ public class FirstPersonController : MonoBehaviour
     public static FirstPersonController instance;
     private PlayerInputActions playerInputActions;
     public event EventHandler OnPauseAction;
+    public event EventHandler OnInventoryAction;
 
     private void onDestroy()
     {
         playerInputActions.Player.Pause.performed -= Pause_performed;
+        playerInputActions.Player.Inventory.performed -= Inventory_performed;
         playerInputActions.Dispose();
     }
 
@@ -148,6 +150,7 @@ public class FirstPersonController : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Pause.performed += Pause_performed;
+        playerInputActions.Player.Inventory.performed += Inventory_performed;
 
         rb = GetComponent<Rigidbody>();
 
@@ -163,6 +166,11 @@ public class FirstPersonController : MonoBehaviour
             sprintRemaining = sprintDuration;
             sprintCooldownReset = sprintCooldown;
         }
+    }
+
+    private void Inventory_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnInventoryAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

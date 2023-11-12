@@ -19,7 +19,6 @@ public class MainGameManager : MonoBehaviour
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
     {
-        Debug.Log("Pause action");
         TogglePauseGame();
     }
 

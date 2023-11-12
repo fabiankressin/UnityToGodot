@@ -51,14 +51,12 @@ public class GamePauseUI : MonoBehaviour
 
     private void Show()
     {
-        Debug.Log("Show pause menu");
         gameObject.SetActive(true);
         resumeButton.Select();
     }
 
     private void Hide()
     {
-        Debug.Log("Hide pause menu");
         gameObject.SetActive(false);
     }
 }
