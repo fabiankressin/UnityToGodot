@@ -122,15 +122,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakCount: 10
+  breakCount: 4
   interactionDistance: 4
   interactionSound: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
   canBePickedUp: 0
   dropItemsOnDestroy: 1
+  itemcount: 1
   inventoryIcon: {fileID: 0}
+  droppedInventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 8830229297879083243, guid: 20540db286ca29e49a31f0e63c4aec75, type: 3}
   useRigidbody: 0
   displayName: Oak Tree
+  playerInventoryUI: {fileID: 0}
+  initialObject: 1
 --- !u!82 &2295171969079286183
 AudioSource:
   m_ObjectHideFlags: 0

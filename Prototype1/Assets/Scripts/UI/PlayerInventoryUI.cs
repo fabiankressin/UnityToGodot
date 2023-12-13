@@ -49,4 +49,22 @@ public class PlayerInventoryUI : MonoBehaviour
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
+
+
+    public void SetImageAndCountOnSlot(int slotIndex, Sprite image, int count)
+    {
+        // Find the InventorySlotUI GameObject by index
+        Transform slotTransform = transform.GetChild(slotIndex);
+
+        // Get the InventorySlotUIScript attached to the InventorySlotUI GameObject
+        InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+
+        // Set the image and count using the InventorySlotUIScript
+        if (slotScript != null)
+        {
+            slotScript.UpdateSlotImage(image);
+            slotScript.SetItemCount(count);
+        }
+    }
+
 }

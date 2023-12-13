@@ -5026,6 +5026,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7898743525056822416, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
+      propertyPath: playerInventoryUI
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9649,6 +9653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7898743525056822416, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
+      propertyPath: playerInventoryUI
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10774,6 +10782,10 @@ PrefabInstance:
     - target: {fileID: 8933131608672718705, guid: 84fef9317f427964b804298055d2290b, type: 3}
       propertyPath: m_Name
       value: InventorySlotUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115898106264700269, guid: 84fef9317f427964b804298055d2290b, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13020,7 +13032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f624ddeff5545947817f7daa985f165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 5
   objectNameText: {fileID: 332513589}
 --- !u!224 &2087742900 stripped
 RectTransform:

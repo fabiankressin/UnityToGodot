@@ -9,10 +9,33 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private AudioClip interactionSound;
     public bool canBePickedUp = false;
     [SerializeField] private bool dropItemsOnDestroy = true;
-    [SerializeField] private GameObject inventoryIcon;
+    [SerializeField] private int itemcount = 1;
+
+    [SerializeField] private Sprite inventoryIcon;
+    [SerializeField] private Sprite droppedInventoryIcon;
     [SerializeField] private GameObject droppedPrefab;
     [SerializeField] private bool useRigidbody = true;
     public string displayName = "";
+
+    public PlayerInventoryUI playerInventoryUI;
+    [SerializeField] private bool initialObject = true;
+
+
+    private void Start()
+    {
+        if (initialObject)
+        {
+            playerInventoryUI = FindObjectOfType<PlayerInventoryUI>();
+
+            // Check if the reference is null, and if so, print a warning
+            if (playerInventoryUI == null)
+            {
+                Debug.LogWarning("PlayerInventoryUI component not found in the scene.");
+            }
+        }
+        // Attempt to find the PlayerInventoryUI component in the scene
+
+    }
 
     private void OnMouseDown()
     {
@@ -57,16 +80,22 @@ public class InteractableObject : MonoBehaviour
 
     private void PickUpObject()
     {
+        Debug.Log("ii");
         // Implement logic for picking up the object or placing it in the inventory
         // This can include spawning an inventory item, updating UI, etc.
         if (inventoryIcon != null)
         {
+            Debug.Log("igi");
             // Instantiate inventory icon or add it to the player's inventory
             // Example: Instantiate(inventoryIcon, playerInventory.transform);
+            playerInventoryUI.SetImageAndCountOnSlot(0, inventoryIcon, itemcount);
+
         }
 
         Destroy(gameObject);
     }
+
+
 
     private void DestroyObject()
     {
@@ -94,6 +123,9 @@ public class InteractableObject : MonoBehaviour
 
                     // Spawn the object at the calculated position
                     GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
+                    InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
+                    spawnedObjectScript.playerInventoryUI = playerInventoryUI;
+                    spawnedObjectScript.inventoryIcon = droppedInventoryIcon;
 
                     if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
                     {
@@ -104,7 +136,9 @@ public class InteractableObject : MonoBehaviour
             }
             else
             {
-                Instantiate(droppedPrefab, transform.position, transform.rotation);
+                GameObject spawnedObject = Instantiate(droppedPrefab, transform.position, transform.rotation);
+                InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
+                spawnedObjectScript.playerInventoryUI = playerInventoryUI;
             }
 
 
