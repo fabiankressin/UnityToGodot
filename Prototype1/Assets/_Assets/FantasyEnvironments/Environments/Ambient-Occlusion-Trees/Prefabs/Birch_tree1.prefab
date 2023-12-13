@@ -133,7 +133,6 @@ MonoBehaviour:
   droppedPrefab: {fileID: 8830229297879083243, guid: 20540db286ca29e49a31f0e63c4aec75, type: 3}
   useRigidbody: 0
   displayName: Birch Tree
-  playerInventoryUI: {fileID: 0}
   initialObject: 1
 --- !u!82 &1269711731181401550
 AudioSource:
@@ -146,7 +145,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
