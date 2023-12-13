@@ -80,15 +80,13 @@ public class InteractableObject : MonoBehaviour
 
     private void PickUpObject()
     {
-        Debug.Log("ii");
         // Implement logic for picking up the object or placing it in the inventory
         // This can include spawning an inventory item, updating UI, etc.
         if (inventoryIcon != null)
         {
-            Debug.Log("igi");
             // Instantiate inventory icon or add it to the player's inventory
             // Example: Instantiate(inventoryIcon, playerInventory.transform);
-            PlayerInventoryUI.Instance.SetImageAndCountOnSlot(0, inventoryIcon, itemcount);
+            PlayerInventoryUI.Instance.SetImageAndCountOnSlot(displayName, inventoryIcon, itemcount, null);
 
         }
 
