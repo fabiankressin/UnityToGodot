@@ -73,27 +73,52 @@ public class PlayerInventoryUI : MonoBehaviour
         return selectedSlot;
     }
 
-    public void selectSlot(int index)
+    private void MarkChild(int index)
+    {
+        Transform slotTransform = transform.GetChild(index);
+        InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+        slotScript.Mark();
+    }
+
+    private void UnMarkChild(int index)
+    {
+        Transform slotTransform = transform.GetChild(index);
+        InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+        slotScript.UnMark();
+    }
+
+    public void SelectSlot(int index)
     {
         if (IsSlotSelected())
         {
             if (GetSelectedSLot() == index)
             {
-                isSlotSelected = false;
+                
                 // TODO: visibly unmark selected slot in inventory
+                UnMarkChild(index);
+
+                isSlotSelected = false;
             }
             else
             {
                 // TODO: add logic to swap slot content
+
+                UnMarkChild(selectedSlot);
+
+                MarkChild(index);
                 selectedSlot = index;
-                // TODO: visibly mark selected slot in inventory
             }
         }
         else
         {
+            
+
+            // TODO: visibly mark selected slot in inventory
+            MarkChild(index);
+
             selectedSlot = index;
             isSlotSelected = true;
-            // TODO: visibly mark selected slot in inventory
+
         }
 
 

@@ -10,14 +10,41 @@ public class InventorySlotUIScript : MonoBehaviour
     private TextMeshProUGUI itemCountText = null;
     private string displayName = "";
 
+    private Button slotButton;
+
+
+    private void Awake()
+    {
+        slotButton = GetComponent<Button>();
+
+        if (slotButton != null)
+        {
+            slotButton.onClick.AddListener(() =>
+            {
+                pressButton();
+            });
+        }
+        else
+        {
+            Debug.LogWarning("Button component not found on the GameObject.");
+        }
+    }
+
+    void pressButton()
+    {
+        int index = transform.GetSiblingIndex();
+        PlayerInventoryUI parentScript = transform.parent.GetComponent<PlayerInventoryUI>();
+        parentScript.SelectSlot(index);
+
+    }
+
     private void Start()
     {
-        // Assuming the Image and TextMeshProUGUI components are the first and second children
-        itemImage = transform.GetChild(0).GetComponent<Image>();
-        itemCountText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        initAttributes();
     }
     private void initAttributes()
     {
+        // Assuming the Image and TextMeshProUGUI components are the first and second children
         itemImage = transform.GetChild(0).GetComponent<Image>();
         itemCountText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
@@ -93,7 +120,27 @@ public class InventorySlotUIScript : MonoBehaviour
         return displayName == "";
     }
 
+    public void Mark()
+    {
+        // Get the original color of the itemImage
+        Color originalColor = itemImage.color;
 
+        // Calculate a slightly desaturated color
+        float desaturationFactor = 0.3f;
+        Color desaturatedColor = Color.Lerp(originalColor, Color.gray, desaturationFactor);
+
+        // Apply the desaturated color to the itemImage
+        itemImage.color = desaturatedColor;
+    }
+
+    public void UnMark()
+    {
+        // Get the original color of the itemImage
+        Color originalColor = Color.white;
+
+        // Set the original color back to the itemImage
+        itemImage.color = originalColor;
+    }
 
 
     public void UpdateSlot(string id, Sprite image, int count)
