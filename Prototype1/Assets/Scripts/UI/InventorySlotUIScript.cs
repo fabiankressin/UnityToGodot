@@ -16,6 +16,8 @@ public class InventorySlotUIScript : MonoBehaviour
 
     public void UpdateSlotImage(Sprite itemSprite)
     {
+        itemImage = transform.GetChild(0).GetComponent<Image>();
+        itemCountText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         itemImage.sprite = itemSprite;
         itemImage.enabled = (itemSprite != null);
     }

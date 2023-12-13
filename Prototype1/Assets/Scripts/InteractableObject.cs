@@ -17,7 +17,7 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private bool useRigidbody = true;
     public string displayName = "";
 
-    public PlayerInventoryUI playerInventoryUI;
+    //public PlayerInventoryUI playerInventoryUI;
     [SerializeField] private bool initialObject = true;
 
 
@@ -25,10 +25,10 @@ public class InteractableObject : MonoBehaviour
     {
         if (initialObject)
         {
-            playerInventoryUI = FindObjectOfType<PlayerInventoryUI>();
+            //playerInventoryUI = FindObjectOfType<PlayerInventoryUI>();
 
             // Check if the reference is null, and if so, print a warning
-            if (playerInventoryUI == null)
+            if (PlayerInventoryUI.Instance == null)
             {
                 Debug.LogWarning("PlayerInventoryUI component not found in the scene.");
             }
@@ -88,7 +88,7 @@ public class InteractableObject : MonoBehaviour
             Debug.Log("igi");
             // Instantiate inventory icon or add it to the player's inventory
             // Example: Instantiate(inventoryIcon, playerInventory.transform);
-            playerInventoryUI.SetImageAndCountOnSlot(0, inventoryIcon, itemcount);
+            PlayerInventoryUI.Instance.SetImageAndCountOnSlot(0, inventoryIcon, itemcount);
 
         }
 
@@ -124,7 +124,7 @@ public class InteractableObject : MonoBehaviour
                     // Spawn the object at the calculated position
                     GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
                     InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
-                    spawnedObjectScript.playerInventoryUI = playerInventoryUI;
+                    //spawnedObjectScript.playerInventoryUI = playerInventoryUI;
                     spawnedObjectScript.inventoryIcon = droppedInventoryIcon;
 
                     if (useRigidbody && spawnedObject.GetComponent<Rigidbody>() == null)
@@ -138,7 +138,7 @@ public class InteractableObject : MonoBehaviour
             {
                 GameObject spawnedObject = Instantiate(droppedPrefab, transform.position, transform.rotation);
                 InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
-                spawnedObjectScript.playerInventoryUI = playerInventoryUI;
+                //spawnedObjectScript.playerInventoryUI = playerInventoryUI;
             }
 
 

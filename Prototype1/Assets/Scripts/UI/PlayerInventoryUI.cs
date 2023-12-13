@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
+    public static PlayerInventoryUI Instance { get; private set; }
+
     private bool isInventoryOpen = false;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-        Hide();
         FirstPersonController.instance.OnInventoryAction += FirstPersonController_OnInventoryAction;
         MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
+        gameObject.SetActive(false);
     }
 
     void OnDestroy()
     {
+        Instance = null;
         FirstPersonController.instance.OnInventoryAction -= FirstPersonController_OnInventoryAction;
         MainGameManager.Instance.OnGamePaused -= MainGameManager_OnGamePaused;
     }
@@ -39,14 +47,17 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void Hide()
     {
-        gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        gameObject.SetActive(false);
     }
 
     private void Show()
     {
-        gameObject.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
+        if (!MainGameManager.Instance.IsGamePaused())
+        {
+            Cursor.lockState = CursorLockMode.None;
+            gameObject.SetActive(true);
+        }
     }
 
 
