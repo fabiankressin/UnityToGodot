@@ -7,15 +7,22 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button playButton;
+    [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitButton;
 
     private void Awake()
     {
-        playButton.onClick.AddListener(() => { 
-            SceneManager.LoadScene("GameScene");
+        playButton.onClick.AddListener(() =>
+        {
+            AudioAndOptionsManager.Instance.LoadScene("GameScene");
         });
-        quitButton.onClick.AddListener(() => { 
-            Application.Quit(); 
+        optionsButton.onClick.AddListener(() =>
+        {
+            AudioAndOptionsManager.Instance.LoadScene("OptionsScene");
+        });
+        quitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
         });
 
         Time.timeScale = 1f;

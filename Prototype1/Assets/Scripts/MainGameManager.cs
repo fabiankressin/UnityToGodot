@@ -6,7 +6,6 @@ using UnityEngine;
 public class MainGameManager : MonoBehaviour
 {
     public static MainGameManager Instance { get; private set; }
-
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
 
