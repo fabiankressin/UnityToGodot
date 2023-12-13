@@ -24,13 +24,15 @@ public class GamePauseUI : MonoBehaviour
         {
             AudioAndOptionsManager.Instance.LoadScene("MainMenuScene");
         });
+
+        Time.timeScale = 1f;
     }
 
     private void Start()
     {
-        Hide();
         MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
         MainGameManager.Instance.OnGameUnpaused += MainGameManager_OnGameUnpaused;
+        Hide();
     }
 
     private void OnDestroy()
