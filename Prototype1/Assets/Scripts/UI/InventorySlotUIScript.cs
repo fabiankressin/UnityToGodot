@@ -34,7 +34,7 @@ public class InventorySlotUIScript : MonoBehaviour
         displayName = id;
     }
 
-    
+
     public void SetItemCount(int count) // add count to current count
     {
 
