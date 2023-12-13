@@ -5,19 +5,18 @@ using UnityEngine;
 public class PlayerInventoryUI : MonoBehaviour
 {
     private bool isInventoryOpen = false;
-    [SerializeField] private MainGameManager mainGameManager;
 
     void Start()
     {
         Hide();
         FirstPersonController.instance.OnInventoryAction += FirstPersonController_OnInventoryAction;
-        mainGameManager.OnGamePaused += MainGameManager_OnGamePaused;
+        MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
     }
 
     void OnDestroy()
     {
         FirstPersonController.instance.OnInventoryAction -= FirstPersonController_OnInventoryAction;
-        mainGameManager.OnGamePaused -= MainGameManager_OnGamePaused;
+        MainGameManager.Instance.OnGamePaused -= MainGameManager_OnGamePaused;
     }
 
     private void MainGameManager_OnGamePaused(object sender, System.EventArgs e)

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class MainGameManager : MonoBehaviour
 {
-    public static MainGameManager iinstance { get; private set; }
+    public static MainGameManager Instance { get; private set; }
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
-    
+
     private bool isGamePaused = false;
 
     private void Start()
     {
+        Instance = this;
         FirstPersonController.instance.OnPauseAction += GameInput_OnPauseAction;
     }
 
