@@ -12,6 +12,8 @@ public class InventorySlotUIScript : MonoBehaviour
 
     private Button slotButton;
 
+    public PlayerInventoryUI.SlotType slotType;
+
 
     private void Awake()
     {
@@ -33,9 +35,7 @@ public class InventorySlotUIScript : MonoBehaviour
     void pressButton()
     {
         int index = transform.GetSiblingIndex();
-        PlayerInventoryUI parentScript = transform.parent.GetComponent<PlayerInventoryUI>();
-        parentScript.SelectSlot(index);
-
+        PlayerInventoryUI.Instance.SelectSlot(slotType, index);
     }
 
     private void Start()
@@ -156,5 +156,10 @@ public class InventorySlotUIScript : MonoBehaviour
         SetID(id);
         UpdateSlotImage(image);
         SetItemCount(count);
+    }
+
+    public void SetSlotType(PlayerInventoryUI.SlotType type)
+    {
+        slotType = type;
     }
 }

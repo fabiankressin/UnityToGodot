@@ -6,9 +6,20 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     public static PlayerInventoryUI Instance { get; private set; }
 
-    private bool isInventoryOpen = false;
+    [SerializeField] InventorySlotUIScript[] storageSlots;
+    [SerializeField] InventorySlotUIScript mainHandSlot;
+    [SerializeField] InventorySlotUIScript[] craftingSlots;
 
+    public enum SlotType
+    {
+        Storage,
+        MainHand,
+        Crafting
+    }
+
+    private bool isInventoryOpen = false;
     private int selectedSlot = 0;
+    private SlotType selectedSlotType;
     private bool isSlotSelected = false;
 
     void Awake()
@@ -21,6 +32,18 @@ public class PlayerInventoryUI : MonoBehaviour
         FirstPersonController.instance.OnInventoryAction += FirstPersonController_OnInventoryAction;
         MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
         gameObject.SetActive(false);
+
+        foreach (InventorySlotUIScript slot in storageSlots)
+        {
+            slot.SetSlotType(SlotType.Storage);
+        }
+
+        //mainHandSlot.SetSlotType(SlotType.MainHand);
+
+        foreach (InventorySlotUIScript slot in craftingSlots)
+        {
+            //slot.SetSlotType(SlotType.Crafting);
+        }
     }
 
     void OnDestroy()
@@ -63,49 +86,45 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
+    //InventoryStorage
+
     public bool IsSlotSelected()
     {
         return isSlotSelected;
     }
 
-    public int GetSelectedSLot()
+    public bool SelectedSlotMatches(SlotType slotType, int index)
     {
-        return selectedSlot;
+        return selectedSlot == index && selectedSlotType == slotType;
     }
 
-    private void MarkChild(int index)
+    private void MarkChild(SlotType slotType, int index = 0)
     {
-        Transform slotTransform = transform.GetChild(index);
-        InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+        InventorySlotUIScript slotScript = getSlotUIScript(slotType, index);
         slotScript.Mark();
     }
 
-    private void UnMarkChild(int index)
+    private void UnMarkChild(SlotType slotType, int index = 0)
     {
-        Transform slotTransform = transform.GetChild(index);
-        InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+        InventorySlotUIScript slotScript = getSlotUIScript(slotType, index);
         slotScript.UnMark();
     }
 
-    public void SelectSlot(int index)
+    public void SelectSlot(SlotType slotType, int index = 0)
     {
         if (IsSlotSelected())
         {
-            if (GetSelectedSLot() == index)
+            if (SelectedSlotMatches(slotType, index))
             {
 
-                UnMarkChild(index);
+                UnMarkChild(slotType, index);
 
                 isSlotSelected = false;
             }
             else
             {
-                // TODO: add logic to swap slot content
-                Transform slotTransform1 = transform.GetChild(selectedSlot);
-                InventorySlotUIScript slotScript1 = slotTransform1.GetComponent<InventorySlotUIScript>();
-
-                Transform slotTransform2 = transform.GetChild(index);
-                InventorySlotUIScript slotScript2 = slotTransform2.GetComponent<InventorySlotUIScript>();
+                InventorySlotUIScript slotScript1 = getSlotUIScript(selectedSlotType, selectedSlot);
+                InventorySlotUIScript slotScript2 = getSlotUIScript(slotType, index);
 
                 string id1 = slotScript1.GetID();
                 Sprite image1 = slotScript1.GetSlotImage();
@@ -118,35 +137,55 @@ public class PlayerInventoryUI : MonoBehaviour
                 slotScript1.UpdateSlot(id2, image2, count2 - count1);
                 slotScript2.UpdateSlot(id1, image1, count1 - count2);
 
-                UnMarkChild(selectedSlot);
+                UnMarkChild(selectedSlotType, selectedSlot);
 
                 isSlotSelected = false;
             }
         }
         else
         {
-
-
-            MarkChild(index);
-
+            MarkChild(slotType, index);
             selectedSlot = index;
+            selectedSlotType = slotType;
             isSlotSelected = true;
-
         }
 
 
     }
 
-
-    public void SetImageAndCountOnSlot(string id, Sprite image, int count, int? slotIndex = null)
+    public InventorySlotUIScript getSlotUIScript(SlotType slotType, int index = 0)
     {
+        switch (slotType)
+        {
+            case SlotType.Storage:
+                {
+                    return storageSlots[index];
+                }
+            case SlotType.MainHand:
+                {
+                    return mainHandSlot;
+                }
+            case SlotType.Crafting:
+                {
+                    return craftingSlots[index];
+                }
+        }
+        Debug.Log("getSlotUIScript: slotType not found. THIS SHOULD NEVER HAPPEN!");
+        return null;
+    }
+
+
+    public void SetImageAndCountOnSlot(string id, Sprite image, int count, int? slotIndex = null, SlotType slotType = SlotType.Storage)
+    {
+        if (slotType != SlotType.Storage)
+        {
+            Debug.Log("SetImageAndCountOnSlot: slotType != SlotType.Storage");
+            return;
+        }
+
         if (slotIndex != null)
         {
-            // Find the InventorySlotUI GameObject by index
-            Transform slotTransform = transform.GetChild(slotIndex.Value);
-
-            // Get the InventorySlotUIScript attached to the InventorySlotUI GameObject
-            InventorySlotUIScript slotScript = slotTransform.GetComponent<InventorySlotUIScript>();
+            InventorySlotUIScript slotScript = getSlotUIScript(slotType, slotIndex.Value);
 
             if (slotScript != null)
             {
@@ -157,11 +196,8 @@ public class PlayerInventoryUI : MonoBehaviour
         else
         {
             // Iterate over all children and find the first slot with the same id
-            foreach (Transform child in transform)
+            foreach (InventorySlotUIScript slotScript in storageSlots)
             {
-                // Get the InventorySlotUIScript attached to the InventorySlotUI GameObject
-                InventorySlotUIScript slotScript = child.GetComponent<InventorySlotUIScript>();
-
                 // Check if the slot has the same image or an empty image
                 if (slotScript != null && slotScript.GetID() == id)
                 {
@@ -170,11 +206,8 @@ public class PlayerInventoryUI : MonoBehaviour
                 }
             }
             // Iterate over all children and find the first slot with an empty id
-            foreach (Transform child in transform)
+            foreach (InventorySlotUIScript slotScript in storageSlots)
             {
-                // Get the InventorySlotUIScript attached to the InventorySlotUI GameObject
-                InventorySlotUIScript slotScript = child.GetComponent<InventorySlotUIScript>();
-
                 // Check if the slot has the same image or an empty image
                 if (slotScript != null && slotScript.SlotIsEmpty())
                 {
