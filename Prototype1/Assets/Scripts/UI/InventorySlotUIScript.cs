@@ -53,7 +53,15 @@ public class InventorySlotUIScript : MonoBehaviour
     {
         initAttributes();
         itemImage.sprite = itemSprite;
+
         itemImage.enabled = (itemSprite != null);
+        if (!itemImage.enabled)
+        {
+            Sprite emptySlotSprite = Resources.Load<Sprite>("empty_slot");
+            itemImage.sprite = emptySlotSprite;
+            itemImage.enabled = true;
+
+        }
     }
 
     public void SetID(string id)

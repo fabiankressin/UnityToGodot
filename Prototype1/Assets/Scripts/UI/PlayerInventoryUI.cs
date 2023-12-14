@@ -93,8 +93,7 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             if (GetSelectedSLot() == index)
             {
-                
-                // TODO: visibly unmark selected slot in inventory
+
                 UnMarkChild(index);
 
                 isSlotSelected = false;
@@ -102,18 +101,32 @@ public class PlayerInventoryUI : MonoBehaviour
             else
             {
                 // TODO: add logic to swap slot content
+                Transform slotTransform1 = transform.GetChild(selectedSlot);
+                InventorySlotUIScript slotScript1 = slotTransform1.GetComponent<InventorySlotUIScript>();
+
+                Transform slotTransform2 = transform.GetChild(index);
+                InventorySlotUIScript slotScript2 = slotTransform2.GetComponent<InventorySlotUIScript>();
+
+                string id1 = slotScript1.GetID();
+                Sprite image1 = slotScript1.GetSlotImage();
+                int count1 = slotScript1.GetCount();
+
+                string id2 = slotScript2.GetID();
+                Sprite image2 = slotScript2.GetSlotImage();
+                int count2 = slotScript2.GetCount();
+
+                slotScript1.UpdateSlot(id2, image2, count2 - count1);
+                slotScript2.UpdateSlot(id1, image1, count1 - count2);
 
                 UnMarkChild(selectedSlot);
 
-                MarkChild(index);
-                selectedSlot = index;
+                isSlotSelected = false;
             }
         }
         else
         {
-            
 
-            // TODO: visibly mark selected slot in inventory
+
             MarkChild(index);
 
             selectedSlot = index;
