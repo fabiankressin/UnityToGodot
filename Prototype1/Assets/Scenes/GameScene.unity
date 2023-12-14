@@ -3953,8 +3953,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1240776746}
   - {fileID: 17462026}
+  - {fileID: 1240776746}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9414,7 +9414,7 @@ MonoBehaviour:
   - {fileID: 1433074756}
   - {fileID: 712272220}
   - {fileID: 1394660177}
-  - {fileID: 670480553}
+  craftingResultSlot: {fileID: 670480553}
 --- !u!4 &1266605475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4243724423293762, guid: c07f24e35f07ce74ba43afa35d48adf7, type: 3}
