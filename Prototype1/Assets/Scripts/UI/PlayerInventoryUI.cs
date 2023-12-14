@@ -38,11 +38,11 @@ public class PlayerInventoryUI : MonoBehaviour
             slot.SetSlotType(SlotType.Storage);
         }
 
-        //mainHandSlot.SetSlotType(SlotType.MainHand);
+        mainHandSlot.SetSlotType(SlotType.MainHand);
 
         foreach (InventorySlotUIScript slot in craftingSlots)
         {
-            //slot.SetSlotType(SlotType.Crafting);
+            slot.SetSlotType(SlotType.Crafting);
         }
     }
 
