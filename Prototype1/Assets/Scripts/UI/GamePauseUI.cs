@@ -30,33 +30,32 @@ public class GamePauseUI : MonoBehaviour
 
     private void Start()
     {
-        MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
-        MainGameManager.Instance.OnGameUnpaused += MainGameManager_OnGameUnpaused;
+        MainGameManager.Instance.OnPauseAction += MainGameManager_OnPauseAction;
         Hide();
     }
 
     private void OnDestroy()
     {
-        MainGameManager.Instance.OnGamePaused -= MainGameManager_OnGamePaused;
-        MainGameManager.Instance.OnGameUnpaused -= MainGameManager_OnGameUnpaused;
+        MainGameManager.Instance.OnPauseAction -= MainGameManager_OnPauseAction;
     }
 
-    private void MainGameManager_OnGameUnpaused(object sender, System.EventArgs e)
+    private void MainGameManager_OnPauseAction(object sender, System.EventArgs e)
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Hide();
-    }
-
-    private void MainGameManager_OnGamePaused(object sender, System.EventArgs e)
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Show();
+        if (MainGameManager.Instance.isGamePaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Show();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Hide();
+        }
     }
 
     private void Show()
     {
         gameObject.SetActive(true);
-        resumeButton.Select();
     }
 
     private void Hide()

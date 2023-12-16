@@ -22,8 +22,6 @@ public class PlayerInventoryUI : MonoBehaviour
     private string[] swordRecipe = { "Wood Pile", "Stone", "", "" };
     private string[] pickaxeRecipe = { "Wood Pile", "Stone", "Stone", "" };
     private validRecipes currentRecipe = validRecipes.none;
-
-    private bool isInventoryOpen = false;
     private int selectedSlot = 0;
     private SlotType selectedSlotType;
     private bool isSlotSelected = false;
@@ -35,8 +33,8 @@ public class PlayerInventoryUI : MonoBehaviour
 
     void Start()
     {
-        FirstPersonController.instance.OnInventoryAction += FirstPersonController_OnInventoryAction;
-        MainGameManager.Instance.OnGamePaused += MainGameManager_OnGamePaused;
+        MainGameManager.Instance.OnInventoryAction += MainGameManager_OnInventoryAction;
+        MainGameManager.Instance.OnPauseAction += MainGameManager_OnPauseAction;
         gameObject.SetActive(false);
 
         foreach (InventorySlotUIScript slot in storageSlots)
@@ -57,19 +55,21 @@ public class PlayerInventoryUI : MonoBehaviour
     void OnDestroy()
     {
         Instance = null;
-        FirstPersonController.instance.OnInventoryAction -= FirstPersonController_OnInventoryAction;
-        MainGameManager.Instance.OnGamePaused -= MainGameManager_OnGamePaused;
+        MainGameManager.Instance.OnInventoryAction -= MainGameManager_OnInventoryAction;
+        MainGameManager.Instance.OnPauseAction -= MainGameManager_OnPauseAction;
     }
 
-    private void MainGameManager_OnGamePaused(object sender, System.EventArgs e)
+    private void MainGameManager_OnPauseAction(object sender, System.EventArgs e)
     {
-        Hide();
+        if (MainGameManager.Instance.isInventoryOpen)
+        {
+            Hide();
+        }
     }
 
-    private void FirstPersonController_OnInventoryAction(object sender, System.EventArgs e)
+    private void MainGameManager_OnInventoryAction(object sender, System.EventArgs e)
     {
-        isInventoryOpen = !isInventoryOpen;
-        if (isInventoryOpen)
+        if (MainGameManager.Instance.isInventoryOpen)
         {
             Show();
         }
@@ -87,7 +87,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void Show()
     {
-        if (!MainGameManager.Instance.IsGamePaused())
+        if (!MainGameManager.Instance.isGamePaused)
         {
             Cursor.lockState = CursorLockMode.None;
             gameObject.SetActive(true);
