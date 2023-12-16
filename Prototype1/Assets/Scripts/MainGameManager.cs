@@ -104,7 +104,8 @@ public class MainGameManager : MonoBehaviour
             isGamePaused = false;
             OnPauseAction?.Invoke(this, EventArgs.Empty);
         }
-
+        healthBarBackground.enabled = false;
+        healthBar.enabled = false;
         isGamePaused = !isGamePaused;
         Time.timeScale = 0f;
         isPlayerDead = true;
