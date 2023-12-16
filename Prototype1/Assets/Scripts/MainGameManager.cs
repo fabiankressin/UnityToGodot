@@ -81,8 +81,15 @@ public class MainGameManager : MonoBehaviour
         {
             return;
         }
+
         playerHealth -= damageAmount;
-        healthBar.transform.localScale = new Vector3(playerHealth * 10, 1f, 1f);
+
+        // Calculate the health percentage
+        float healthPercentage = (float)playerHealth / playerMaxHealth;
+
+        // Update the health bar scale based on the percentage
+        healthBar.transform.localScale = new Vector3(healthPercentage, 1f, 1f);
+
         if (playerHealth <= 0)
         {
             playerHealth = 0;
@@ -115,7 +122,7 @@ public class MainGameManager : MonoBehaviour
     //CALL THIS FUNCTION USING MainGameManager.Instance.IsPlayerHealthFull();
     public bool IsPlayerHealthFull()
     {
-        return playerHealth == playerMaxHealth;
+        return playerHealth >= playerMaxHealth;
     }
 
     //CALL THIS FUNCTION USING MainGameManager.Instance.HealPlayer(int amount);
@@ -130,6 +137,12 @@ public class MainGameManager : MonoBehaviour
         {
             playerHealth = playerMaxHealth;
         }
-        healthBar.transform.localScale = new Vector3(playerHealth * 10, 1f, 1f);
+
+        // Calculate the health percentage
+        float healthPercentage = (float)playerHealth / playerMaxHealth;
+
+        // Update the health bar scale based on the percentage
+        healthBar.transform.localScale = new Vector3(healthPercentage * 10, 1f, 1f);
     }
+
 }
