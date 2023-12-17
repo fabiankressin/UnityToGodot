@@ -11,9 +11,9 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private bool dropItemsOnDestroy = true;
     [SerializeField] private int itemcount = 1;
 
-    [SerializeField] private Sprite inventoryIcon;
-    [SerializeField] private Sprite droppedInventoryIcon;
-    [SerializeField] private GameObject droppedPrefab;
+    [SerializeField] public Sprite inventoryIcon;
+    [SerializeField] public Sprite droppedInventoryIcon;
+    [SerializeField] public GameObject droppedPrefab;
     [SerializeField] private bool useRigidbody = true;
     public string displayName = "";
 

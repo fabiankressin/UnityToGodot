@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.25
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 984039097}
-  m_IndirectSpecularColor: {r: 0.19755921, g: 0.21920678, b: 0.25597584, a: 0.25}
+  m_IndirectSpecularColor: {r: 0.1980469, g: 0.2195501, b: 0.25598845, a: 0.25}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8069,16 +8069,52 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6451568, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 118898, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 990404762}
   m_SourcePrefab: {fileID: 100100000, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
 --- !u!4 &990404760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455816, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
   m_PrefabInstance: {fileID: 990404759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &990404761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 118898, guid: 92028abf4453dd444abfa92bedf0449c, type: 3}
+  m_PrefabInstance: {fileID: 990404759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &990404762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 5
+  interactionSound: {fileID: 0}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  itemcount: 1
+  inventoryIcon: {fileID: 21300000, guid: 7d45e9ca7622fa4469e3fcfbe9355028, type: 3}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 990404761}
+  useRigidbody: 0
+  displayName: Wood Pile
+  initialObject: 1
 --- !u!4 &994938187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7685502308853959511, guid: a1f19e97be28d494ca89a2de6c0f0bfa, type: 3}
@@ -10613,6 +10649,8 @@ MonoBehaviour:
   - {fileID: 712272220}
   - {fileID: 1394660177}
   craftingResultSlot: {fileID: 670480553}
+  axeSprite: {fileID: 21300000, guid: e00d6ab017a0fbb4db0768d1a1712bc9, type: 3}
+  swordSprite: {fileID: 21300000, guid: cedf6bdbfad620949b419268974208e2, type: 3}
 --- !u!4 &1266605475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4243724423293762, guid: c07f24e35f07ce74ba43afa35d48adf7, type: 3}
@@ -10867,8 +10905,9 @@ GameObject:
   - component: {fileID: 1307853283}
   - component: {fileID: 1307853282}
   - component: {fileID: 1307853281}
+  - component: {fileID: 1307853284}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10962,6 +11001,30 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307853279}
   m_Mesh: {fileID: 4300000, guid: 0c6bd092db560c64a8ac57b3dea55bce, type: 3}
+--- !u!114 &1307853284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307853279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 5
+  interactionSound: {fileID: 0}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  itemcount: 1
+  inventoryIcon: {fileID: 21300000, guid: 364c2e002024d9c4c98553453741c3f2, type: 3}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 1307853279}
+  useRigidbody: 0
+  displayName: Stone
+  initialObject: 1
 --- !u!114 &1307958663 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1518395190951715492, guid: 84fef9317f427964b804298055d2290b, type: 3}
@@ -11172,13 +11235,45 @@ PrefabInstance:
     - {fileID: 7898743525056822416, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1596872523515200, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1331967119}
   m_SourcePrefab: {fileID: 100100000, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
 --- !u!4 &1331967117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4100683814371560, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
   m_PrefabInstance: {fileID: 1331967116}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1331967118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1596872523515200, guid: dea84a3662be77b4bad1db42d2b32262, type: 3}
+  m_PrefabInstance: {fileID: 1331967116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1331967119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331967118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 5
+  interactionSound: {fileID: 0}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  itemcount: 1
+  inventoryIcon: {fileID: 21300000, guid: b0bb506cd8a5d464baed1ad871605678, type: 3}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 1331967118}
+  useRigidbody: 0
+  displayName: Mushroom
+  initialObject: 1
 --- !u!1001 &1339649677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15026,13 +15121,69 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3983a354c452ee77473cf934bb21ec28, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1851756927}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 3983a354c452ee77473cf934bb21ec28, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1851756928}
   m_SourcePrefab: {fileID: 100100000, guid: 3983a354c452ee77473cf934bb21ec28, type: 3}
 --- !u!4 &1851756924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 3983a354c452ee77473cf934bb21ec28, type: 3}
   m_PrefabInstance: {fileID: 1851756923}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1851756925 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 3983a354c452ee77473cf934bb21ec28, type: 3}
+  m_PrefabInstance: {fileID: 1851756923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1851756927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851756925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 5
+  interactionSound: {fileID: 0}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  itemcount: 1
+  inventoryIcon: {fileID: 21300000, guid: cedf6bdbfad620949b419268974208e2, type: 3}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 1851756925}
+  useRigidbody: 0
+  displayName: Sword
+  initialObject: 1
+--- !u!65 &1851756928
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851756925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 80, z: 17}
+  m_Center: {x: 0, y: 2, z: -3}
 --- !u!224 &1852241087 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6656328990269046432, guid: 84fef9317f427964b804298055d2290b, type: 3}
@@ -15340,6 +15491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 483301201}
   healthBarBackground: {fileID: 969371186}
+  mainHand: {fileID: 1941561778}
   isGamePaused: 0
   isInventoryOpen: 0
   isPlayerDead: 0
@@ -17252,8 +17404,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6672433769139112431, guid: 5eb86ce95a9ffcc4789e5cfe06c1f279, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8303161067584373051}
   m_SourcePrefab: {fileID: 100100000, guid: 5eb86ce95a9ffcc4789e5cfe06c1f279, type: 3}
+--- !u!1 &8303161067584373050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6672433769139112431, guid: 5eb86ce95a9ffcc4789e5cfe06c1f279, type: 3}
+  m_PrefabInstance: {fileID: 8303161067584373049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8303161067584373051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303161067584373050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146e9fe48b2f3df40b914fb573c52a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakCount: 10
+  interactionDistance: 5
+  interactionSound: {fileID: 0}
+  canBePickedUp: 1
+  dropItemsOnDestroy: 0
+  itemcount: 1
+  inventoryIcon: {fileID: 21300000, guid: e00d6ab017a0fbb4db0768d1a1712bc9, type: 3}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 8303161067584373050}
+  useRigidbody: 0
+  displayName: Axe
+  initialObject: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -7,6 +7,11 @@ public class ObjectNameDisplay : MonoBehaviour
 
     void Update()
     {
+        if (MainGameManager.Instance.isGamePaused)
+        {
+            objectNameText.gameObject.SetActive(false);
+            return;
+        }
         // Cast a ray from the center of the screen
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
@@ -30,7 +35,8 @@ public class ObjectNameDisplay : MonoBehaviour
                     {
                         objectNameText.text = interactableObject.displayName;// + "\n[F] Pick up";
                     }
-                    else{
+                    else
+                    {
                         objectNameText.text = interactableObject.displayName;
                     }
                     objectNameText.color = Color.white;

@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "Drop Item",
                     "type": "Button",
                     "id": "7216d321-9ffb-4bf4-a21b-797dcb33eb53",
                     "expectedControlType": "Button",
@@ -59,11 +59,11 @@
                 {
                     "name": "",
                     "id": "f0d2cd5d-aabc-4af1-b8fc-a326a8b7bcb3",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "Drop Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

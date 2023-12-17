@@ -10,14 +10,17 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] Image healthBar;
     [SerializeField] Image healthBarBackground;
+    [SerializeField] GameObject mainHand;
 
     private PlayerInputActions playerInputActions;
     public event EventHandler OnPauseAction;
     public event EventHandler OnInventoryAction;
+    public event EventHandler DropItemAction;
     public event EventHandler OnPlayerDeath;
     public bool isGamePaused = false;
     public bool isInventoryOpen = false;
     public bool isPlayerDead = false;
+    private GameObject[] mainHandItems;
 
     public int playerHealth = 100;
     public int playerMaxHealth = 100;
@@ -29,13 +32,26 @@ public class MainGameManager : MonoBehaviour
         playerInputActions.Player.Enable();
         playerInputActions.Player.Pause.performed += Pause_performed;
         playerInputActions.Player.Inventory.performed += Inventory_performed;
+        playerInputActions.Player.DropItem.performed += DropItem_performed;
+
+        mainHandItems = new GameObject[mainHand.transform.childCount];
+        foreach (Transform child in mainHand.transform)
+        {
+            mainHandItems[child.GetSiblingIndex()] = child.gameObject;
+        }
     }
 
     private void OnDestroy()
     {
         playerInputActions.Player.Pause.performed -= Pause_performed;
         playerInputActions.Player.Inventory.performed -= Inventory_performed;
+        playerInputActions.Player.DropItem.performed -= DropItem_performed;
         playerInputActions.Dispose();
+    }
+
+    private void DropItem_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        DropItemAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Inventory_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -97,6 +113,25 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!PlayerInventoryUI.Instance.mainHandSlot.SlotIsEmpty())
+            {
+                if (PlayerInventoryUI.Instance.mainHandSlot.GetID() == "Mushroom" && !IsPlayerHealthFull())
+                {
+                    PlayerInventoryUI.Instance.mainHandSlot.SetItemCount(-1);
+                    HealPlayer(10);
+                    if (PlayerInventoryUI.Instance.mainHandSlot.GetCount() == 0)
+                    {
+                        UpdateMainHand("");
+                    }
+                }
+            }
+        }
+    }
+
     //very hacky solution
     private void PlayerDeathEvent()
     {
@@ -119,6 +154,33 @@ public class MainGameManager : MonoBehaviour
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
     }
 
+    public GameObject GetGameObject(string itemName)
+    {
+        foreach (GameObject item in mainHandItems)
+        {
+            if (item.name == itemName)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void UpdateMainHand(string itemName)
+    {
+        foreach (GameObject item in mainHandItems)
+        {
+            if (item.name == itemName)
+            {
+                item.SetActive(true);
+            }
+            else
+            {
+                item.SetActive(false);
+            }
+        }
+    }
+
     //CALL THIS FUNCTION USING MainGameManager.Instance.IsPlayerHealthFull();
     public bool IsPlayerHealthFull()
     {
@@ -128,7 +190,7 @@ public class MainGameManager : MonoBehaviour
     //CALL THIS FUNCTION USING MainGameManager.Instance.HealPlayer(int amount);
     public void HealPlayer(int healAmount)
     {
-        if (healAmount < 0 && IsPlayerHealthFull())
+        if (healAmount < 0 || IsPlayerHealthFull())
         {
             return;
         }
@@ -142,7 +204,7 @@ public class MainGameManager : MonoBehaviour
         float healthPercentage = (float)playerHealth / playerMaxHealth;
 
         // Update the health bar scale based on the percentage
-        healthBar.transform.localScale = new Vector3(healthPercentage * 10, 1f, 1f);
+        healthBar.transform.localScale = new Vector3(healthPercentage, 1f, 1f);
     }
 
 }

@@ -119,6 +119,11 @@ public class FirstPersonController : MonoBehaviour
     //CUSTOM
     public static FirstPersonController instance;
 
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
     private void Awake()
     {
         instance = this;

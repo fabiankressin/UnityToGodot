@@ -7,9 +7,12 @@ public class PlayerInventoryUI : MonoBehaviour
     public static PlayerInventoryUI Instance { get; private set; }
 
     [SerializeField] InventorySlotUIScript[] storageSlots;
-    [SerializeField] InventorySlotUIScript mainHandSlot;
+    [SerializeField] public InventorySlotUIScript mainHandSlot;
     [SerializeField] InventorySlotUIScript[] craftingSlots;
     [SerializeField] InventorySlotUIScript craftingResultSlot;
+
+    [SerializeField] Sprite axeSprite;
+    [SerializeField] Sprite swordSprite;
 
     public enum SlotType
     {
@@ -35,6 +38,7 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         MainGameManager.Instance.OnInventoryAction += MainGameManager_OnInventoryAction;
         MainGameManager.Instance.OnPauseAction += MainGameManager_OnPauseAction;
+        MainGameManager.Instance.DropItemAction += MainGameManager_DropItemAction;
         gameObject.SetActive(false);
 
         foreach (InventorySlotUIScript slot in storageSlots)
@@ -57,6 +61,32 @@ public class PlayerInventoryUI : MonoBehaviour
         Instance = null;
         MainGameManager.Instance.OnInventoryAction -= MainGameManager_OnInventoryAction;
         MainGameManager.Instance.OnPauseAction -= MainGameManager_OnPauseAction;
+        MainGameManager.Instance.DropItemAction -= MainGameManager_DropItemAction;
+    }
+
+    private void MainGameManager_DropItemAction(object sender, System.EventArgs e)
+    {
+        if (!mainHandSlot.SlotIsEmpty())
+        {
+            int numberOfObjects = mainHandSlot.GetCount();
+            Sprite droppedInventoryIcon = mainHandSlot.GetSlotImage();
+            for (int i = 0; i < numberOfObjects; i++)
+            {
+                // Calculate a random position within the bounds of the object's collider
+                Vector3 randomPosition = new Vector3(
+                    0f,
+                    -1f,
+                    0f
+                );
+
+                // Spawn the object at the calculated position
+                GameObject spawnedObject = Instantiate(MainGameManager.Instance.GetGameObject(mainHandSlot.GetID()), FirstPersonController.instance.GetTransform().position + randomPosition, transform.rotation);
+                InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
+                spawnedObjectScript.inventoryIcon = droppedInventoryIcon;
+            }
+            mainHandSlot.UpdateSlot("", null, -numberOfObjects);
+            MainGameManager.Instance.UpdateMainHand("");
+        }
     }
 
     private void MainGameManager_OnPauseAction(object sender, System.EventArgs e)
@@ -121,6 +151,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void SelectSlot(SlotType slotType, int index = 0)
     {
+        checkForValidRecipe();
         if (IsSlotSelected())
         {
             if (SelectedSlotMatches(slotType, index))
@@ -191,7 +222,7 @@ public class PlayerInventoryUI : MonoBehaviour
                     slotScript1.UpdateSlot(id1, image1, -1);
                     slotScript2.UpdateSlot(id1, image1, 1);
                 }
-                else if (selectedSlotType == SlotType.Crafting && (id1 == id2 || id1 == "") && id2 != "" && count2 > 1)
+                else if (selectedSlotType == SlotType.Crafting && (id1 == id2 || id1 == "") && id2 != "" && count2 > 1 && count1 < 1)
                 {
                     slotScript1.UpdateSlot(id2, image2, 1);
                     slotScript2.UpdateSlot(id2, image2, -1);
@@ -213,7 +244,8 @@ public class PlayerInventoryUI : MonoBehaviour
 
                 if (slotType == SlotType.MainHand || selectedSlotType == SlotType.MainHand)
                 {
-                    //Update Main Hand
+                    MainGameManager.Instance.UpdateMainHand("");
+                    MainGameManager.Instance.UpdateMainHand(mainHandSlot.GetID());
                 }
             }
         }
@@ -224,13 +256,7 @@ public class PlayerInventoryUI : MonoBehaviour
             selectedSlotType = slotType;
             isSlotSelected = true;
         }
-
-        if (slotType == SlotType.Crafting)
-        {
-            checkForValidRecipe();
-        }
-
-
+        checkForValidRecipe();
     }
 
     public InventorySlotUIScript getSlotUIScript(SlotType slotType, int index = 0)
@@ -323,12 +349,12 @@ public class PlayerInventoryUI : MonoBehaviour
         }
         if (slotContent[0] == pickaxeRecipe[0] && slotContent[1] == pickaxeRecipe[1] && slotContent[2] == pickaxeRecipe[2] && slotContent[3] == "")
         {
-            craftingResultSlot.UpdateSlot("pickaxe", Resources.Load<Sprite>("pickaxe"), 1);
+            craftingResultSlot.UpdateSlot("Axe", axeSprite, 1);
             currentRecipe = validRecipes.pickaxe;
         }
         else if (slotContent[0] == swordRecipe[0] && slotContent[1] == swordRecipe[1] && slotContent[2] == "" && slotContent[3] == "")
         {
-            craftingResultSlot.UpdateSlot("sword", Resources.Load<Sprite>("sword"), 1);
+            craftingResultSlot.UpdateSlot("Sword", swordSprite, 1);
             currentRecipe = validRecipes.sword;
         }
         else

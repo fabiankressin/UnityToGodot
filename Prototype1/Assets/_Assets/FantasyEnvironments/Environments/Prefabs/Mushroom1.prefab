@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33417256196659398}
   - component: {fileID: 23264161567117498}
   - component: {fileID: 7898743525056822416}
-  - component: {fileID: 6821618031301595219}
+  - component: {fileID: 1383142310039406086}
   m_Layer: 3
   m_Name: Mushroom1
   m_TagString: Untagged
@@ -105,13 +105,13 @@ MonoBehaviour:
   dropItemsOnDestroy: 0
   itemcount: 1
   inventoryIcon: {fileID: 21300000, guid: b0bb506cd8a5d464baed1ad871605678, type: 3}
-  droppedPrefab: {fileID: 0}
+  droppedInventoryIcon: {fileID: 0}
+  droppedPrefab: {fileID: 1596872523515200}
   useRigidbody: 0
   displayName: Mushroom
-  playerInventoryUI: {fileID: 0}
   initialObject: 1
---- !u!64 &6821618031301595219
-MeshCollider:
+--- !u!65 &1383142310039406086
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,10 +128,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: bdeb79af937bc3940958acedeb2e5c15, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.33945787, y: 0.41441342, z: 0.50554276}
+  m_Center: {x: -0.013732351, y: 0.18724288, z: 0.021076437}
 --- !u!1 &6877486935534843013
 GameObject:
   m_ObjectHideFlags: 0
