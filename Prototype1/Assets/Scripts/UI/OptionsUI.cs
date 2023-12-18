@@ -11,7 +11,6 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] public Button saveAndQuitButton;
     [SerializeField] public Slider masterVolumeSlider;
     [SerializeField] public TextMeshProUGUI masterVolumeText;
-    // Start is called before the first frame update
     private float masterVolume;
 
     private void Awake()

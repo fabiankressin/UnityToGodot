@@ -9,7 +9,6 @@ public class AudioAndOptionsManager : MonoBehaviour
     public float masterVolume = 0.5f;
     public string currentScene;
     public string previousScene;
-    // Start is called before the first frame update
     void Awake()
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("AudioAndOptionsManager");

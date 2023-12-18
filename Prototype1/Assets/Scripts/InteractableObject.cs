@@ -14,6 +14,7 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] public Sprite inventoryIcon;
     [SerializeField] public Sprite droppedInventoryIcon;
     [SerializeField] public GameObject droppedPrefab;
+    [SerializeField] public string droppedName = "";
     [SerializeField] private bool useRigidbody = true;
     public string displayName = "";
 
@@ -39,17 +40,13 @@ public class InteractableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         if (Vector3.Distance(transform.position, FirstPersonController.instance.transform.position) <= interactionDistance)
         {
-            if (clickCount < breakCount)
+            if (interactionSound != null)
             {
-                HandleInteraction();
+                PlayInteractionSound();
             }
-            else if (clickCount >= breakCount)
-            {
-                DestroyObject();
-            }
+            HandleInteraction();
         }
     }
 
@@ -57,15 +54,18 @@ public class InteractableObject : MonoBehaviour
     {
         clickCount++;
 
-        if (interactionSound != null)
-        {
-            PlayInteractionSound();
-        }
-
         if (canBePickedUp)
         {
             PickUpObject();
+            return;
         }
+
+        if (clickCount >= breakCount)
+        {
+            DestroyObject();
+        }
+
+
     }
 
     private void PlayInteractionSound()
@@ -86,8 +86,14 @@ public class InteractableObject : MonoBehaviour
         {
             // Instantiate inventory icon or add it to the player's inventory
             // Example: Instantiate(inventoryIcon, playerInventory.transform);
-            PlayerInventoryUI.Instance.SetImageAndCountOnSlot(displayName, inventoryIcon, itemcount, null);
-
+            if (droppedName != "")
+            {
+                PlayerInventoryUI.Instance.SetImageAndCountOnSlot(droppedName, inventoryIcon, itemcount, null);
+            }
+            else
+            {
+                PlayerInventoryUI.Instance.SetImageAndCountOnSlot(displayName, inventoryIcon, itemcount, null);
+            }
         }
 
         Destroy(gameObject);
@@ -97,17 +103,10 @@ public class InteractableObject : MonoBehaviour
 
     private void DestroyObject()
     {
-        if (interactionSound != null)
-        {
-            PlayInteractionSound();
-        }
-
-
         if (dropItemsOnDestroy)
         {
             if (useRigidbody)
             {
-                // Generate a random number of objects between 5 and 12
                 int numberOfObjects = Random.Range(5, 13);
 
                 for (int i = 0; i < numberOfObjects; i++)
@@ -119,7 +118,6 @@ public class InteractableObject : MonoBehaviour
                         Random.Range(-0.5f, 0.5f)
                     );
 
-                    // Spawn the object at the calculated position
                     GameObject spawnedObject = Instantiate(droppedPrefab, transform.position + randomPosition, transform.rotation);
                     InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
                     //spawnedObjectScript.playerInventoryUI = playerInventoryUI;

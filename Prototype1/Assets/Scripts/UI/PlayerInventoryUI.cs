@@ -6,10 +6,10 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     public static PlayerInventoryUI Instance { get; private set; }
 
-    [SerializeField] InventorySlotUIScript[] storageSlots;
-    [SerializeField] public InventorySlotUIScript mainHandSlot;
-    [SerializeField] InventorySlotUIScript[] craftingSlots;
-    [SerializeField] InventorySlotUIScript craftingResultSlot;
+    [SerializeField] InventorySlotUI[] storageSlots;
+    [SerializeField] public InventorySlotUI mainHandSlot;
+    [SerializeField] InventorySlotUI[] craftingSlots;
+    [SerializeField] InventorySlotUI craftingResultSlot;
 
     [SerializeField] Sprite axeSprite;
     [SerializeField] Sprite swordSprite;
@@ -22,8 +22,8 @@ public class PlayerInventoryUI : MonoBehaviour
         CraftingResult
     }
 
-    private string[] swordRecipe = { "Wood Pile", "Stone", "", "" };
-    private string[] pickaxeRecipe = { "Wood Pile", "Stone", "Stone", "" };
+    private string[] swordRecipe = { "Wood", "Stone", "", "" };
+    private string[] pickaxeRecipe = { "Wood", "Stone", "Stone", "" };
     private validRecipes currentRecipe = validRecipes.none;
     private int selectedSlot = 0;
     private SlotType selectedSlotType;
@@ -41,14 +41,14 @@ public class PlayerInventoryUI : MonoBehaviour
         MainGameManager.Instance.DropItemAction += MainGameManager_DropItemAction;
         gameObject.SetActive(false);
 
-        foreach (InventorySlotUIScript slot in storageSlots)
+        foreach (InventorySlotUI slot in storageSlots)
         {
             slot.SetSlotType(SlotType.Storage);
         }
 
         mainHandSlot.SetSlotType(SlotType.MainHand);
 
-        foreach (InventorySlotUIScript slot in craftingSlots)
+        foreach (InventorySlotUI slot in craftingSlots)
         {
             slot.SetSlotType(SlotType.Crafting);
         }
@@ -78,13 +78,13 @@ public class PlayerInventoryUI : MonoBehaviour
                     -1f,
                     0f
                 );
-
                 // Spawn the object at the calculated position
+                
                 GameObject spawnedObject = Instantiate(MainGameManager.Instance.GetGameObject(mainHandSlot.GetID()), FirstPersonController.instance.GetTransform().position + randomPosition, transform.rotation);
-                InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
-                spawnedObjectScript.inventoryIcon = droppedInventoryIcon;
+                //InteractableObject spawnedObjectScript = spawnedObject.GetComponent<InteractableObject>();
+                //spawnedObjectScript.inventoryIcon = droppedInventoryIcon;
             }
-            mainHandSlot.UpdateSlot("", null, -numberOfObjects);
+            mainHandSlot.ResetSlot();
             MainGameManager.Instance.UpdateMainHand("");
         }
     }
@@ -139,13 +139,13 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void MarkChild(SlotType slotType, int index = 0)
     {
-        InventorySlotUIScript slotScript = getSlotUIScript(slotType, index);
+        InventorySlotUI slotScript = getSlotUIScript(slotType, index);
         slotScript.Mark();
     }
 
     private void UnMarkChild(SlotType slotType, int index = 0)
     {
-        InventorySlotUIScript slotScript = getSlotUIScript(slotType, index);
+        InventorySlotUI slotScript = getSlotUIScript(slotType, index);
         slotScript.UnMark();
     }
 
@@ -164,8 +164,8 @@ public class PlayerInventoryUI : MonoBehaviour
             }
             else
             {
-                InventorySlotUIScript slotScript1 = getSlotUIScript(selectedSlotType, selectedSlot);
-                InventorySlotUIScript slotScript2 = getSlotUIScript(slotType, index);
+                InventorySlotUI slotScript1 = getSlotUIScript(selectedSlotType, selectedSlot);
+                InventorySlotUI slotScript2 = getSlotUIScript(slotType, index);
 
                 string id1 = slotScript1.GetID();
                 Sprite image1 = slotScript1.GetSlotImage();
@@ -189,7 +189,7 @@ public class PlayerInventoryUI : MonoBehaviour
                                     {
                                         if (swordRecipe[i] != "")
                                         {
-                                            craftingSlots[i].SetItemCount(-1);
+                                            craftingSlots[i].AddToItemCount(-1);
                                         }
                                     }
                                     slotScript1.UpdateSlot(id2, image2, count2 - count1);
@@ -202,7 +202,7 @@ public class PlayerInventoryUI : MonoBehaviour
                                     {
                                         if (pickaxeRecipe[i] != "")
                                         {
-                                            craftingSlots[i].SetItemCount(-1);
+                                            craftingSlots[i].AddToItemCount(-1);
                                         }
                                     }
                                     slotScript1.UpdateSlot(id2, image2, count2 - count1);
@@ -259,7 +259,7 @@ public class PlayerInventoryUI : MonoBehaviour
         checkForValidRecipe();
     }
 
-    public InventorySlotUIScript getSlotUIScript(SlotType slotType, int index = 0)
+    public InventorySlotUI getSlotUIScript(SlotType slotType, int index = 0)
     {
         switch (slotType)
         {
@@ -295,7 +295,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         if (slotIndex != null)
         {
-            InventorySlotUIScript slotScript = getSlotUIScript(slotType, slotIndex.Value);
+            InventorySlotUI slotScript = getSlotUIScript(slotType, slotIndex.Value);
 
             if (slotScript != null)
             {
@@ -306,9 +306,8 @@ public class PlayerInventoryUI : MonoBehaviour
         else
         {
             // Iterate over all children and find the first slot with the same id
-            foreach (InventorySlotUIScript slotScript in storageSlots)
+            foreach (InventorySlotUI slotScript in storageSlots)
             {
-                // Check if the slot has the same image or an empty image
                 if (slotScript != null && slotScript.GetID() == id)
                 {
                     slotScript.UpdateSlot(id, image, count);
@@ -316,9 +315,8 @@ public class PlayerInventoryUI : MonoBehaviour
                 }
             }
             // Iterate over all children and find the first slot with an empty id
-            foreach (InventorySlotUIScript slotScript in storageSlots)
+            foreach (InventorySlotUI slotScript in storageSlots)
             {
-                // Check if the slot has the same image or an empty image
                 if (slotScript != null && slotScript.SlotIsEmpty())
                 {
                     slotScript.UpdateSlot(id, image, count);
@@ -339,10 +337,10 @@ public class PlayerInventoryUI : MonoBehaviour
     }
     public void checkForValidRecipe()
     {
-        craftingResultSlot.SetItemCount(-craftingResultSlot.GetCount());
+        craftingResultSlot.AddToItemCount(-craftingResultSlot.GetCount());
         string[] slotContent = { "", "", "", "" };
         int slotCounter = 0;
-        foreach (InventorySlotUIScript slotScript in craftingSlots)
+        foreach (InventorySlotUI slotScript in craftingSlots)
         {
             slotContent[slotCounter] = slotScript.GetID();
             slotCounter++;

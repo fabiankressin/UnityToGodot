@@ -128,7 +128,7 @@ MonoBehaviour:
   inventoryIcon: {fileID: 0}
   droppedInventoryIcon: {fileID: 21300000, guid: 364c2e002024d9c4c98553453741c3f2, type: 3}
   droppedPrefab: {fileID: 185840, guid: fe78b30f7a980d748a46c587a31099fc, type: 3}
+  droppedName: Stone
   useRigidbody: 1
   displayName: Rock
-  playerInventoryUI: {fileID: 0}
   initialObject: 1

@@ -66,10 +66,11 @@ MonoBehaviour:
   dropItemsOnDestroy: 0
   itemcount: 5
   inventoryIcon: {fileID: 21300000, guid: 7d45e9ca7622fa4469e3fcfbe9355028, type: 3}
+  droppedInventoryIcon: {fileID: 0}
   droppedPrefab: {fileID: 0}
+  droppedName: Wood
   useRigidbody: 0
   displayName: Wood Pile
-  playerInventoryUI: {fileID: 0}
   initialObject: 0
 --- !u!65 &2465920888109713535
 BoxCollider:

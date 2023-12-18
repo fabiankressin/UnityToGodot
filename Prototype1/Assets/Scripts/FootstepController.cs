@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundController : MonoBehaviour
+public class FootstepController : MonoBehaviour
 {
     public AudioClip soundClip;
     private AudioSource audioSource;
@@ -18,7 +18,6 @@ public class SoundController : MonoBehaviour
         // Check if any of the specified keys (W, A, S, D) are pressed
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
-            // Check if the audio is not already playing
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();

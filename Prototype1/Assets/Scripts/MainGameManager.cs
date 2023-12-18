@@ -121,7 +121,7 @@ public class MainGameManager : MonoBehaviour
             {
                 if (PlayerInventoryUI.Instance.mainHandSlot.GetID() == "Mushroom" && !IsPlayerHealthFull())
                 {
-                    PlayerInventoryUI.Instance.mainHandSlot.SetItemCount(-1);
+                    PlayerInventoryUI.Instance.mainHandSlot.AddToItemCount(-1);
                     HealPlayer(10);
                     if (PlayerInventoryUI.Instance.mainHandSlot.GetCount() == 0)
                     {
@@ -132,7 +132,7 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
-    //very hacky solution
+    //temporary solution
     private void PlayerDeathEvent()
     {
         if (isInventoryOpen)
